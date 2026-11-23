@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Galerie photo{% endblock %}
+
+{% block body %}
+<div style="display: flex;">
+
+    {# Liste des galeries à gauche, identifiées par le pseudo #}
+    <nav style="width: 200px; padding: 20px; border-right: 1px solid #ccc;">
+        <h3>Galeries</h3>
+        {% for user in users %}
+            <p>
+                <a href="{{ path('app_gallery', {id: user.id}) }}">{{ user.pseudo }}</a>
+            </p>
+        {% else %}
+            <p>Aucune galerie.</p>
+        {% endfor %}
+    </nav>
+
+    {# Galerie affichée au centre #}
+    <main style="flex: 1; padding: 20px;">
+        {% if gallery %}
+            <h2>Galerie de {{ gallery.pseudo }}</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                {% for photo in photos %}
+                    <img src="{{ asset('uploads/photos/' ~ photo.filename) }}"
+                         alt="Photo de {{ gallery.pseudo }}"
+                         style="width: 200px; height: 150px; object-fit: cover;">
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Aucune galerie publiée pour le moment.</p>
+        {% endif %}
+    </main>
+</div>
+{% endblock %}

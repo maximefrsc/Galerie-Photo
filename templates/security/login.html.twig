@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<main style="padding: 20px;">
+    <h2>Connexion</h2>
+
+    {# Message d'erreur si l'e-mail ou le mot de passe est incorrect #}
+    {% if error %}
+        <p class="erreur">E-mail ou mot de passe incorrect.</p>
+    {% endif %}
+
+    <p><a href="{{ path('app_home') }}">Retour à l'accueil</a></p>
+</main>
+{% endblock %}
