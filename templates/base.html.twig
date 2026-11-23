@@ -18,7 +18,10 @@
 
         {# Formulaire de connexion en haut à droite (Cas 2.1) #}
         {% if app.user %}
-            <span>Connecté : {{ app.user.pseudo }}</span>
+            <span>
+                Connecté : {{ app.user.pseudo }}
+                <a href="{{ path('app_logout') }}" style="margin-left: 10px;">Déconnexion</a>
+            </span>
         {% else %}
             <form method="post" action="{{ path('app_login') }}">
                 <input type="email" name="_username" placeholder="E-mail" required>
