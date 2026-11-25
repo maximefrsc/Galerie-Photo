@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte - Galerie photo{% endblock %}
+
+{% block body %}
+{# La boîte de dialogue : l'attribut "open" l'affiche même sans JavaScript #}
+<dialog id="register-dialog" open style="padding: 20px; width: 340px;">
+    <h2 style="margin-top: 0;">Créer un compte</h2>
+
+    {% if errors.general is defined %}
+        <p class="erreur">{{ errors.general }}</p>
+    {% endif %}
+
+    <form method="post" action="{{ path('app_register') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('register') }}">
+
+        <p>
+            <label>E-mail<br>
+                <input type="text" name="email" value="{{ old.email }}" style="width: 100%;">
+            </label>
+            {% if errors.email is defined %}<br><span class="erreur">{{ errors.email }}</span>{% endif %}
+        </p>
+
+        <p>
+            <label>Pseudo<br>
+                <input type="text" name="pseudo" value="{{ old.pseudo }}" style="width: 100%;">
+            </label>
+            {% if errors.pseudo is defined %}<br><span class="erreur">{{ errors.pseudo }}</span>{% endif %}
+        </p>
+
+        <p>
+            <label>Âge<br>
+                <input type="text" name="age" value="{{ old.age }}" style="width: 100%;">
+            </label>
+            {% if errors.age is defined %}<br><span class="erreur">{{ errors.age }}</span>{% endif %}
+        </p>
+
+        <p>
+            <label>Captcha : combien font {{ captcha_question }} ?<br>
+                <input type="text" name="captcha" autocomplete="off" style="width: 100%;">
+            </label>
+            {% if errors.captcha is defined %}<br><span class="erreur">{{ errors.captcha }}</span>{% endif %}
+        </p>
+
+        <button type="submit">Valider l'inscription</button>
+        <a href="{{ back_url }}">Annuler</a>
+    </form>
+</dialog>
+
+<script>
+    // On ouvre la boîte en mode "modal" (fond grisé), et si on la ferme avec Échap,
+    // on retourne sur la page précédente.
+    var dialog = document.getElementById('register-dialog');
+    dialog.removeAttribute('open');
+    dialog.showModal();
+    dialog.addEventListener('close', function () {
+        window.location.href = '{{ back_url|e('js') }}';
+    });
+</script>
+{% endblock %}

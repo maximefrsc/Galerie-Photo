@@ -10,6 +10,7 @@
         header a { color: white; text-decoration: none; }
         header form { display: flex; gap: 6px; align-items: center; }
         .erreur { color: #c00; }
+        .succes { background: #e6f4ea; color: #1b5e20; padding: 10px 20px; margin: 0; }
     </style>
 </head>
 <body>
@@ -28,9 +29,15 @@
                 <input type="password" name="_password" placeholder="Mot de passe" required>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <button type="submit">Connexion</button>
+                <a href="{{ path('app_register') }}">Créer un compte</a>
             </form>
         {% endif %}
     </header>
+
+    {# Messages de confirmation (ex : mot de passe généré après l'inscription) #}
+    {% for message in app.flashes('success') %}
+        <p class="succes">{{ message }}</p>
+    {% endfor %}
 
     {% block body %}{% endblock %}
 </body>
